@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -42,32 +42,35 @@ createTime:2019年2月17日 上午10:51:53
 					<span class="tit" style="">注册</span>
 				</div>
 				<div class="row">
-					<form class="form-horizontal">
+					<form class="form-horizontal" action="user/login/regedit">
 						<div class="form-group">
 							<label for="inputAccount" class="col-sm-4 control-label">账号</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="inputAccount" placeholder="账号">
+								<input type="text" name="account" class="form-control" id="inputAccount" placeholder="账号">
+								<span id="accountTip" style="color: red;">
+									账号已存在
+								</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword3" class="col-sm-4 control-label">密码</label>
 							<div class="col-sm-4">
-								<input type="password" class="form-control" id="inputPassword3" placeholder="密码">
+								<input type="password" name="password" class="form-control" id="inputPassword3" placeholder="密码">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputName" class="col-sm-4 control-label">昵称</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="inputName" placeholder="昵称">
+								<input type="text" name="name" class="form-control" id="inputName" placeholder="昵称">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail" class="col-sm-4 control-label">邮箱</label>
 							<div class="col-sm-3">
-								<input type="email" class="form-control" id="inputEmail" placeholder="邮箱">
+								<input type="email"  name="email" class="form-control" id="inputEmail" placeholder="邮箱">
 							</div>
 							<div class="col-sm-1">
-								<a href="" class="btn btn-small btn-success">获取验证码</a>
+								<a href="javascript:" id="sendCode" class="btn btn-small btn-success">获取验证码</a>
 							</div>
 						</div>
 
@@ -107,6 +110,43 @@ createTime:2019年2月17日 上午10:51:53
 		$(document).on('ready', function() {
 			$('.banner').show();
 			$("#index").attr('class', 'active')
+			$("#inputAccount").bind('input propertychange',function(){
+				$("#accountTip").hide();
+				var account = $(this).val();
+				console.log(account)
+				$.ajax({
+					type:"get",
+					url:"user/login/checkAccount",
+					data:{ 
+						'account':account
+					},
+					dataType:"json",
+					success:function(result){
+						console.log(result)
+						if(!result){
+							$("#accountTip").show();
+						}
+					},
+					async:true
+				});
+			})
+			var emailCode = "";
+			$("#sendCode").on('click',function(){
+				var email = $("[name=email]").val();
+				$.ajax({
+					type:"get",
+					url:"user/email/sendCode",
+					data:{ 
+						'email':email
+					},
+					dataType:"json",
+					success:function(result){
+						console.log(result)
+						emailCode = result;
+					},
+					async:true
+				});
+			})
 		})
 	</script>
 

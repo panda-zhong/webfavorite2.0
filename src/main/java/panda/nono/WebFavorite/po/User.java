@@ -22,6 +22,19 @@ public class User implements Serializable{
 	private String name;
 	private String funsSize;
 	private String salt;
+	private String idolSize;
+
+
+	public User(String account, String password, String logo, String email, String name) {
+		super();
+		this.account = account;
+		this.password = password;
+		this.logo = logo;
+		this.email = email;
+		this.name = name;
+	}
+
+
 	public User(String account, String logo, String email, String regeditTime, String introduction, String name) {
 		super();
 		this.account = account;
@@ -126,5 +139,15 @@ public class User implements Serializable{
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+
+
+	public String getIdolSize() {
+		return idolSize;
+	}
+
+
+	public void setIdolSize(String idolSize) {
+		this.idolSize = idolSize;
 	}
 }

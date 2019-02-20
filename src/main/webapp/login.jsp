@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,7 +41,7 @@ createTime:2019年2月17日 上午10:51:53
 
 			<div class="clo-md-8 clo-md-offset-2">
 				<div class="row titrow">
-					<span class="tit" style="">登录</span>
+					<span class="tit" style="">登录${KEYINSESSION}</span>
 				</div>
 				<div class="row"> 
 					<form action="user/login/check" class="form-horizontal">
@@ -52,9 +52,21 @@ createTime:2019年2月17日 上午10:51:53
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="inputPassword3" name="password" class="col-sm-3 control-label">密码</label>
+							<label for="inputPassword3"  class="col-sm-3 control-label">密码</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" id="inputPassword3" placeholder="密码">
+								<input type="password" name="password" class="form-control" id="inputPassword3" placeholder="密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" name="password" class="col-sm-3 control-label"></label>
+							<div class="col-sm-6">
+								<img src="getCodeImage?code="/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputCode" name="password" class="col-sm-3 control-label">验证码</label>
+							<div class="col-sm-6">
+								<input type="text" name="code" class="form-control" id="inputCode" placeholder="验证码">
 							</div>
 						</div>
 						<div class="form-group">

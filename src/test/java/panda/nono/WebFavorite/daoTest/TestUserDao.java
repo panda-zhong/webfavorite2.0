@@ -40,11 +40,11 @@ public class TestUserDao {
 		System.out.println(loginUser);
 	}
 
-//	 @Test
+	 @Test
 	public void testupdatepassword() throws Exception {
 		User user = new User();
-		user.setEmail("1324@qq.com");
-		user.setPassword("12344");
+		user.setEmail("287595523@qq.com");
+		user.setPassword("admin");
 		Encryption.encryptPasswd(user);
 		this.userDao.updatePassword(user);
 	}

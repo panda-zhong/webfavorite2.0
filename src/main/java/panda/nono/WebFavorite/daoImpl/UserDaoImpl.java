@@ -38,7 +38,6 @@ public class UserDaoImpl implements UserDao{
 		preparedStatement.setString(4, name);
 		preparedStatement.setDate(5, mysqldate);
 		preparedStatement.execute();
-		JDBCUtil.close(connect);
 	}
 	
 	public User login(User user) throws SQLException {
@@ -69,7 +68,6 @@ public class UserDaoImpl implements UserDao{
 			resultUser.setIntroduction(userIntroduction);
 			resultUser.setEmail(userEmail);
 		}
-		JDBCUtil.close(connect);
 		return resultUser;
 	}
 
@@ -85,7 +83,6 @@ public class UserDaoImpl implements UserDao{
 		preparedStatement.setString(2,salt);
 		preparedStatement.setString(3,email);
 		preparedStatement.executeUpdate();
-		JDBCUtil.close(connect); 
 	}
 
 	@Override
@@ -98,7 +95,6 @@ public class UserDaoImpl implements UserDao{
 		preparedStatement.setString(1, stade);
 		preparedStatement.setString(2, account);
 		preparedStatement.executeUpdate();
-		JDBCUtil.close(connect); 
 	}
 
 	@Override
@@ -128,7 +124,6 @@ public class UserDaoImpl implements UserDao{
 			resultUser.setIntroduction(userIntroduction);
 			resultUser.setEmail(userEmail);
 		}
-		JDBCUtil.close(connect);
 		return resultUser;
 	}
 	
@@ -161,7 +156,6 @@ public class UserDaoImpl implements UserDao{
 			resultUser.setEmail(userEmail);
 			resultUser.setSalt(salt);
 		}
-		JDBCUtil.close(connect);
 		return resultUser;
 	}
 
