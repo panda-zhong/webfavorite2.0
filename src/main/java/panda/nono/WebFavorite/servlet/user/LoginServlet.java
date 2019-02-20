@@ -12,18 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import panda.nono.WebFavorite.po.User;
-import panda.nono.WebFavorite.service.UserService;
-import panda.nono.WebFavorite.serviceImpl.UserServiceImpl;
-
-@WebServlet(urlPatterns = "/user/login/*")
+@WebServlet(urlPatterns = "/user/login/*") 
 public class LoginServlet extends HttpServlet{
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private UserService userService = new UserServiceImpl();
 	HttpSession session = null;
 	PrintWriter pw = null;
 	String path = null;
@@ -32,7 +26,6 @@ public class LoginServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		super.init(config);
 	}
-
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = req.getRequestURI();
@@ -41,28 +34,22 @@ public class LoginServlet extends HttpServlet{
 		path = req.getContextPath();
 		pw = resp.getWriter();
 		System.out.println(uri);
-		System.out.println(action);
 		switch (action) {
-		case "regedit":
-			try {
-				this.regeditAction(req,resp);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		case "check":
+			this.checkUser(req,resp);
 			break;
-			
 		default:
 			break;
 		}
+		return;
 	}
-
-	private void regeditAction(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+	
+	private void checkUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		// TODO Auto-generated method stub
 		String account = req.getParameter("account");
 		String password = req.getParameter("password");
-		User user = new User(account, password);
-		this.userService.regedit(user);
-		resp.sendRedirect(path+"/login.jsp");
+		System.out.println(account+password);
+		resp.sendRedirect(path+"/website/search/index");
 	}
+
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @author Berenice
- *用户类
+ *鐢ㄦ埛绫�
  */
 public class User implements Serializable{
 	
@@ -17,6 +17,58 @@ public class User implements Serializable{
 	private String logo;
 	private String email;
 	private String regeditTime;
+	private String state;
+	private String introduction;
+	private String name;
+	private String funsSize;
+	private String salt;
+	public User(String account, String logo, String email, String regeditTime, String introduction, String name) {
+		super();
+		this.account = account;
+		this.logo = logo;
+		this.email = email;
+		this.regeditTime = regeditTime;
+		this.introduction = introduction;
+		this.name = name;
+	}
+
+
+	@Override
+	public String toString() {
+		return "User [account=" + account + ", password=" + password + ", logo=" + logo + ", email=" + email
+				+ ", regeditTime=" + regeditTime + ", state=" + state + ", introduction=" + introduction + ", name="
+				+ name + ", funsSize=" + funsSize + "]";
+	}
+
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public String getAccount() {
 		return account;
 	}
@@ -56,5 +108,23 @@ public class User implements Serializable{
 	}
 	public User() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getFunsSize() {
+		return funsSize;
+	}
+
+	public void setFunsSize(String funsSize) {
+		this.funsSize = funsSize;
+	}
+
+
+	public String getSalt() {
+		return salt;
+	}
+
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 }
