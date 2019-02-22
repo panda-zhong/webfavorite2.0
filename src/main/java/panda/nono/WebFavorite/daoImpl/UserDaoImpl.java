@@ -28,48 +28,20 @@ public class UserDaoImpl implements UserDao{
 		String password = user.getPassword();
 		String email = user.getEmail();
 		String name = user.getName();
+		String salt = user.getSalt();
 		String Nowtime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 		java.sql.Date mysqldate = java.sql.Date.valueOf(Nowtime);
-		sql = "INSERT INTO user(account,password,email,name,regeditTime) VALUES(?,?,?,?,?)";
+		sql = "INSERT INTO user(account,password,email,name,regeditTime,salt) VALUES(?,?,?,?,?,?)";
 		preparedStatement = connect.prepareStatement(sql);
 		preparedStatement.setString(1, account);
 		preparedStatement.setString(2, password);
 		preparedStatement.setString(3, email);
 		preparedStatement.setString(4, name);
 		preparedStatement.setDate(5, mysqldate);
+		preparedStatement.setString(6, salt);
 		preparedStatement.execute();
 	}
 	
-	public User login(User user) throws SQLException {
-		// TODO Auto-generated method stub
-		String account = user.getAccount();
-		String password = user.getPassword();
-		sql = "SELECT name,account,password,logo,regeditTime,state,introduction,email from user where account = ? and `password` = ?";
-		preparedStatement = connect.prepareStatement(sql);
-		preparedStatement.setString(1, account);
-		preparedStatement.setString(2, password);
-		ResultSet resultSet = preparedStatement.executeQuery();
-		User resultUser = new User();
-		while(resultSet.next()){
-			String userAccount = resultSet.getString("account");
-			String userPassword = resultSet.getString("password");
-			String userName = resultSet.getString("name");
-			String userLogo = resultSet.getString("logo");
-			String userRegeditTime = resultSet.getString("regeditTime");
-			String userState = resultSet.getString("state");
-			String userIntroduction= resultSet.getString("introduction");
-			String userEmail= resultSet.getString("email");
-			resultUser.setAccount(userAccount);
-			resultUser.setPassword(userPassword);
-			resultUser.setName(userName);
-			resultUser.setLogo(userLogo);
-			resultUser.setRegeditTime(userRegeditTime);
-			resultUser.setState(userState);
-			resultUser.setIntroduction(userIntroduction);
-			resultUser.setEmail(userEmail);
-		}
-		return resultUser;
-	}
 
 	@Override
 	public void updatePassword(User user) throws SQLException {
@@ -131,7 +103,7 @@ public class UserDaoImpl implements UserDao{
 	public User getUserById(User user) throws SQLException {
 		// TODO Auto-generated method stub
 		String id = user.getAccount();
-		sql = "SELECT salt, name,account,password,logo,regeditTime,state,introduction,email FROM user where account = ? and state = 1";
+		sql = "SELECT salt, name,account,password,logo,regeditTime,state,introduction,email,funsSize FROM user where account = ? and state = 1";
 		preparedStatement = connect.prepareStatement(sql);
 		preparedStatement.setString(1, id);
 		ResultSet resultSet = preparedStatement.executeQuery();
@@ -145,6 +117,7 @@ public class UserDaoImpl implements UserDao{
 			String userState = resultSet.getString("state");
 			String userIntroduction= resultSet.getString("introduction");
 			String userEmail= resultSet.getString("email");
+			String funsSize= resultSet.getString("funsSize");
 			String salt = resultSet.getString("salt");
 			resultUser.setAccount(userAccount);
 			resultUser.setPassword(userPassword);
@@ -155,6 +128,7 @@ public class UserDaoImpl implements UserDao{
 			resultUser.setIntroduction(userIntroduction);
 			resultUser.setEmail(userEmail);
 			resultUser.setSalt(salt);
+			resultUser.setFunsSize(funsSize);
 		}
 		return resultUser;
 	}
@@ -185,6 +159,34 @@ public class UserDaoImpl implements UserDao{
 			userList.add(user);
 		}
 		return userList;
+	}
+
+
+	@Override
+	public void updataInfo(User user) throws SQLException {
+		// TODO Auto-generated method stub
+		String account = user.getAccount();
+		String name = user.getName();
+		String email = user.getEmail();
+		String introduction = user.getIntroduction();
+		sql = "UPDATE user SET name=?,email=?,introduction=? WHERE account=?; ";
+		preparedStatement = connect.prepareStatement(sql);
+		preparedStatement.setString(1, name);
+		preparedStatement.setString(2, email);
+		preparedStatement.setString(3, introduction);
+		preparedStatement.setString(4, account);
+		preparedStatement.executeUpdate();
+	}
+
+
+	@Override
+	public void setLogo(String account, String logo) throws SQLException {
+		// TODO Auto-generated method stub
+		sql = "UPDATE user SET logo=? WHERE account=?; ";
+		preparedStatement = connect.prepareStatement(sql);
+		preparedStatement.setString(1, logo);
+		preparedStatement.setString(2, account);
+		preparedStatement.executeUpdate();
 	}
 	
 }

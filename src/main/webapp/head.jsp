@@ -83,33 +83,33 @@ createTime:2019年2月17日 下午3:16:49
 						<button type="submit" class="btn btn-default">搜索</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
-						<%-- <c:if test="${empty USERINSESSION}"> --%>
+						 <c:if test="${empty USERINSESSION}"> 
 							<li>
 								<a href="login.jsp">登录</a>
 							</li>
 							<li>
 								<a href="regedit.jsp">注册</a>
 							</li>
-						<%-- </c:if> --%>
+						</c:if> 
 						<c:if test="${!empty USERINSESSION}">
 							<li>
 								<a href="user/collect/getAll">收藏夹</a>
 							</li>
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${SessionScope.USERINSESSION.name} <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${USERINSESSION.name} <span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li>
 										<a href="userInfo.jsp">我的</a>
 									</li>
 									<li role="separator" class="divider"></li>
 									<li>
-										<a href="#">消息 <span class="label label-warning">
-										3 </span>
+										<a href="userMessage.jsp">消息 <span class="label label-warning">
+										${UNREADSIZE} </span>
 										</a>
 									</li>
 									<li role="separator" class="divider"></li>
 									<li>
-										<a href="#">注销</a>
+										<a href="user/login/logout">注销</a>
 									</li>
 								</ul>
 							</li>
@@ -126,5 +126,17 @@ createTime:2019年2月17日 下午3:16:49
 			<h1 class="brand">zhong-panda</h1>
 		</div>
 	</body>
-
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			type:"get",
+			url:"user/info/updata",
+			data:{ 
+			},
+			dataType:"json",
+			success:function(result){
+			},
+			async:true
+		});
+	</script>
 </html>

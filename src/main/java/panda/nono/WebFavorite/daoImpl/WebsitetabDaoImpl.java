@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import panda.nono.WebFavorite.dao.WebsitetabDao;
-import panda.nono.WebFavorite.po.Message;
 import panda.nono.WebFavorite.po.Websitetab;
 import panda.nono.WebFavorite.util.JDBCUtil;
 

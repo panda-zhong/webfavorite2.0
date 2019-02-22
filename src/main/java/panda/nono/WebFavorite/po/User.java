@@ -24,7 +24,6 @@ public class User implements Serializable{
 	private String salt;
 	private String idolSize;
 
-
 	public User(String account, String password, String logo, String email, String name) {
 		super();
 		this.account = account;

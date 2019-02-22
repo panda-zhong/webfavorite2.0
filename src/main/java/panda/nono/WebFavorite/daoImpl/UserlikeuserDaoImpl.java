@@ -121,7 +121,7 @@ public  class UserlikeuserDaoImpl implements UserlikeuserDao{
 		return userList;
 	}		 
 	@Override
-	public String getFanssize(Userlikeuser userlikeuser) throws SQLException {
+	public String getIdolsize(Userlikeuser userlikeuser) throws SQLException {
 		connect = JDBCUtil.getConnection();
 		// TODO Auto-generated method stub
 		String funsAccount = userlikeuser.getFunsAccount();

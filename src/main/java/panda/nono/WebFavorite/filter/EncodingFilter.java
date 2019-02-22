@@ -8,11 +8,14 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebFilter(filterName="encodingFilter",urlPatterns="/*")
 public class EncodingFilter implements Filter{
-	private String encoding;
+	private String encoding="UTF-8" ;
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -34,7 +37,7 @@ public class EncodingFilter implements Filter{
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		// TODO Auto-generated method stub
-		this.encoding = config.getInitParameter("encoding");
+//		this.encoding = config.getInitParameter("encoding");
 	}
 
 

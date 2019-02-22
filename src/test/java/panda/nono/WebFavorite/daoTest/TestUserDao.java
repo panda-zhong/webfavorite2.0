@@ -31,16 +31,8 @@ public class TestUserDao {
 		}
 	}
 
-//	@Test
-	public void testLogin() throws Exception {
-		User user = new User();
-		user.setAccount("32332233");
-		user.setPassword("1");
-		User loginUser = this.userDao.login(user);
-		System.out.println(loginUser);
-	}
 
-	 @Test
+//	 @Test
 	public void testupdatepassword() throws Exception {
 		User user = new User();
 		user.setEmail("287595523@qq.com");

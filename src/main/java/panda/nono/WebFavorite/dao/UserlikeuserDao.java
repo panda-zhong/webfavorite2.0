@@ -11,6 +11,6 @@ public interface UserlikeuserDao {
 	public void focususers(Userlikeuser userlikeuser) throws SQLException;
 	public void cancelfocus(Userlikeuser userlikeuser) throws SQLException;
 	public List<User> getUserlikeuserByAccount(Userlikeuser userlikeuser) throws SQLException;
-	public String getFanssize(Userlikeuser userlikeuser) throws SQLException;
-	public List<User> getUserByAccount(Userlikeuser userlikeuser) throws SQLException;//Í¨¹ýÓÃ»§»ñµÃ¹Ø×¢µÄÓÃ»§ÁÐ±í
+	public String getIdolsize(Userlikeuser userlikeuser) throws SQLException;
+	public List<User> getUserByAccount(Userlikeuser userlikeuser) throws SQLException;//Í¨ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ã¹ï¿½×¢ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ð±ï¿½
 }

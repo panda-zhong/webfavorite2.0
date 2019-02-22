@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import panda.nono.WebFavorite.common.Common;
 import panda.nono.WebFavorite.dao.MessageDao;
 import panda.nono.WebFavorite.po.Message;
 import panda.nono.WebFavorite.util.JDBCUtil;
@@ -39,28 +40,11 @@ public class MessageDaoImpl implements MessageDao{
 
 	}
 	@Override
-	public void upMessagestate(Message message) throws SQLException {
+	public List<Message> getAdminMessage(String account) throws SQLException {
 		connect = JDBCUtil.getConnection();
-		// TODO Auto-generated method stub
-		String id = message.getId();
-		String state = message.getState();
-		sql = "UPDATE message SET state=? WHERE id=?; ";
+		sql = "SELECT detail,fromAccount,time,id FROM message WHERE toAccount = ? and fromAccount = 'admin' ORDER BY message.time DESC";
 		preparedStatement = connect.prepareStatement(sql);
-		preparedStatement.setString(1, state);
-		preparedStatement.setString(2, id);
-		preparedStatement.executeUpdate();
-		JDBCUtil.close(connect);
-	}
-	@Override
-	public List<Message> getMessageByToAndState(Message message) throws SQLException {
-		connect = JDBCUtil.getConnection();
-		// TODO Auto-generated method stub
-		String toAccount = message.getTo();
-		String state = message.getState();
-		sql = "SELECT detail,fromAccount,time,id FROM message WHERE toAccount = ? and state= ?";
-		preparedStatement = connect.prepareStatement(sql);
-		preparedStatement.setString(1, toAccount);
-		preparedStatement.setString(2, state);
+		preparedStatement.setString(1, account);
 		ResultSet messageSet = preparedStatement.executeQuery();
 		List<Message> messageList = new ArrayList<Message>();
 		while(messageSet.next()){
@@ -73,5 +57,73 @@ public class MessageDaoImpl implements MessageDao{
 		}
 		JDBCUtil.close(connect);
 		return messageList;
+	}
+	@Override
+	public List<Message> getBeLoveMessage(String account) throws SQLException {
+		connect = JDBCUtil.getConnection();
+		sql = "SELECT detail,fromAccount,time,id FROM message WHERE toAccount = ? and fromAccount = 'like' ORDER BY message.time DESC";
+		preparedStatement = connect.prepareStatement(sql);
+		preparedStatement.setString(1, account);
+		ResultSet messageSet = preparedStatement.executeQuery();
+		List<Message> messageList = new ArrayList<Message>();
+		while(messageSet.next()){
+			String detail = messageSet.getString("detail");
+			String fromAccount = messageSet.getString("fromAccount");
+			String time = messageSet.getString("time");
+			String id = messageSet.getString("id");
+			Message getMessage = new Message(detail, fromAccount, time, id);
+			messageList.add(getMessage);
+		}
+		JDBCUtil.close(connect);
+		return messageList;
+	}
+	@Override
+	public List<Message> getUserMessage(String account) throws SQLException {
+		connect = JDBCUtil.getConnection();
+		sql = "SELECT detail,fromAccount,time,id FROM message WHERE toAccount = ? and fromAccount NOT in(?,?) ORDER BY message.time DESC";
+		preparedStatement = connect.prepareStatement(sql);
+		preparedStatement.setString(1, account);
+		preparedStatement.setString(2, Common.ADMINACCOUNT);
+		preparedStatement.setString(3, Common.LIKEACCOUNT);
+		ResultSet messageSet = preparedStatement.executeQuery();
+		List<Message> messageList = new ArrayList<Message>();
+		while(messageSet.next()){
+			String detail = messageSet.getString("detail");
+			String fromAccount = messageSet.getString("fromAccount");
+			String time = messageSet.getString("time");
+			String id = messageSet.getString("id");
+			Message getMessage = new Message(detail, fromAccount, time, id);
+			messageList.add(getMessage);
+		}
+		JDBCUtil.close(connect);
+		return messageList;
+	}
+	@Override
+	public String getUnreadMessageSize(String account) throws SQLException {
+		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
+		sql = "SELECT COUNT(1) as size FROM message WHERE toAccount = ? and state = ?";
+		preparedStatement = connect.prepareStatement(sql);
+		preparedStatement.setString(1, account);
+		preparedStatement.setString(2, Common.UNREADSTATE);
+		ResultSet messageSet = preparedStatement.executeQuery();
+		while(messageSet.next()){
+			String size = messageSet.getString("size");
+			return size;
+		}
+		JDBCUtil.close(connect);
+		return "0";
+	}
+	@Override
+	public void upMessagestate(String account) throws SQLException {
+		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
+		// TODO Auto-generated method stub
+		sql = "UPDATE message SET state=? where toAccount = ?";
+		preparedStatement = connect.prepareStatement(sql);
+		preparedStatement.setString(1, Common.READSTATE);
+		preparedStatement.setString(2, account);
+		preparedStatement.executeUpdate();
+		JDBCUtil.close(connect);
 	}
 }

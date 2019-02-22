@@ -95,6 +95,9 @@
 			.label-info{
 				margin-left: 5px;
 			}
+			#nav{
+				margin-top: 25px;
+			}
 		</style>
 	</head>
 	<!--
@@ -112,32 +115,32 @@ createTime:2019年2月17日 上午10:51:53
 						<li class="userInfo">
 							<div class="userLogo">
 								<a href="">
-									<img alt="140x140" src="img/weblogo.png" class="img-circle" />
+									<img alt="140x140" src="${USERINSESSION.logo}" class="img-circle" />
 								</a>
 							</div>
 							<div class="detailInfo">
 								<div class="info-head">
 									<a href="">
-										<h2 class="userName"><strong>panda</strong></h2>
+										<h2 class="userName"><strong>${USERINSESSION.name}	</strong></h2>
 									</a>
 									<p>
 										<small>
 										<a href="">
 										关注：<span id="collect">
-										3											
+										${USERINSESSION.idolSize}										
 										</span>
 										</a>
 										&nbsp;&nbsp;&nbsp; 
 										<a href="">
 											粉丝：
-											<span id="funs">2</span>
+											<span id="funs">${USERINSESSION.funsSize}</span>
 											
 										</a>
 										</small>
 									</p>
 									<p>
 										<span id="introduction">
-											哈哈哈哈哈哈哈或或或或或
+											${USERINSESSION.introduction}
 										</span>
 									</p>
 								</div>
@@ -145,13 +148,13 @@ createTime:2019年2月17日 上午10:51:53
 						</li>
 					</ul>
 				</div>
-				<div class="row">
+				<div class="row" id="nav">
 					<ul class="nav nav-pills">
 						<li role="presentation">
 							<a href="userIndex.jsp">收藏<span class="label label-info">30</span></a>
 						</li>
 						<li role="presentation">
-							<a href="userMessage.jsp">信息<span class="label label-info">3</span></a>
+							<a href="userMessage.jsp">信息<span class="label label-info">${UNREADSIZE}</span></a>
 						</li>
 						<li role="presentation" class="active">
 							<a href="userInfo.jsp">资料</a>
@@ -159,26 +162,23 @@ createTime:2019年2月17日 上午10:51:53
 					</ul>
 				</div>
 				<div class="row">
-					<form class="form-horizontal">
+					<form class="form-horizontal" action="user/info/updataInfo" method="post">
 						<div class="form-group">
 							<label for="inputName" class="col-sm-4 control-label">昵称</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="inputName" placeholder="昵称">
+								<input type="text" class="form-control" name="name"  id="inputName" value="${USERINSESSION.name}" placeholder="昵称">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEmail" class="col-sm-4 control-label">邮箱</label>
-							<div class="col-sm-3">
-								<input type="email" class="form-control" id="inputEmail" placeholder="邮箱">
-							</div>
-							<div class="col-sm-1">
-								<a href="" class="btn btn-small btn-success">获取验证码</a>
+							<div class="col-sm-4">
+								<input type="email" class="form-control" name="email" value="${USERINSESSION.email}" id="inputEmail" placeholder="邮箱">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="inputEmailCode" class="col-sm-4 control-label">验证码</label>
+							<label for="inputEmailCode" class="col-sm-4 control-label">个人简介</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="inputEmailCode" placeholder="验证码">
+								<input type="text" class="form-control" name="introduction" id="inputEmailCode" value="${USERINSESSION.introduction}" placeholder="个人简介">
 							</div>
 
 						</div>
@@ -192,10 +192,10 @@ createTime:2019年2月17日 上午10:51:53
 
 				</div>
 				<div class="row">
-					<form class="form-horizontal" action="${pageContext.request.contextPath}/user/modifyInfo/modifyLogo" method="post" enctype="multipart/form-data">
+					<form class="form-horizontal" action="user/info/updataLogo" method="post" enctype="multipart/form-data">
 
 						<div class="form-group">
-							<label for="inputLogo" class="col-sm-4 control-label"><img src="img/weblogo.png" class="" alt="加载失败" id="img"></label>
+							<label for="inputLogo" class="col-sm-4 control-label"><img src="${USERINSESSION.logo}" class="" alt="加载失败" id="img"></label>
 							<div class="col-sm-3">
 								<!--<label for="inputLogo" class="col-sm-4 control-label"><img src="img/weblogo.png" class="" alt="加载失败" id="img"></label>-->
 								<input type="submit" id="modifyLogoGroup" class="btn btn-block btn-small btn-success" value="修改头像" style="display: none;margin-top: 70px;"/>

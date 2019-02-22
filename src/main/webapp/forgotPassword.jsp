@@ -71,7 +71,7 @@ createTime:2019年2月17日 上午10:51:53
 				<div class="row">
 					<ol class="breadcrumb">
 						<li>
-							<a href="#">登录</a>
+							<a href="login.jsp">登录</a>
 						</li>
 						<li class="active">
 							忘记密码
@@ -111,7 +111,7 @@ createTime:2019年2月17日 上午10:51:53
 						<div class="form-group" id="passwordAgainGroup">
 							<label for="inputPasswordAgain" class="col-sm-4 control-label">确认密码</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="passwordAgain" id="inputPasswordAgain" placeholder="确认密码">
+								<input type="password" class="form-control" name="passwordAgain" id="inputPasswordAgain" placeholder="确认密码">
 								<span id="passwordAgainOk" class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #5cb85c;display: none;"></span>
 								<span id="passwordAgainFail" class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #d9534f;display: none;">两次密码不一致</span>
 							</div>
@@ -141,8 +141,8 @@ createTime:2019年2月17日 上午10:51:53
 							<label for="inputEmailCode" class="col-sm-4 control-label">验证码</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" id="inputEmailCode" placeholder="验证码">
-								<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #5cb85c;"></span>
-								<span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #d9534f;">验证码不正确</span>
+								<!--<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #5cb85c;"></span>
+								<span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #d9534f;">验证码不正确</span>-->
 							</div>
 						</div>
 						<div class="form-group" id="finishGroup">
@@ -192,6 +192,7 @@ createTime:2019年2月17日 上午10:51:53
 				$(this).addClass('disabled');
 				var time = 60;
 				$('#backClick').hide();
+				sendCode();
 				var alarm = setInterval(function() {
 					time--;
 					$('#sendCode').text(time + '秒后可重新发送')
@@ -207,6 +208,39 @@ createTime:2019年2月17日 上午10:51:53
 					$('#sendCode').removeClass('disabled');
 				}, 60000)
 			})
+			
+			function sendCode(){
+				var userEmail = $('[name = email]').val();
+				$.ajax({
+					type:"get",
+					url:"user/email/sendCode",
+					data:{ 
+						'email':userEmail
+					},
+					dataType:"json",
+					success:function(result){
+						console.log(result)
+//						emailCode = result;
+					},
+					async:true
+				});
+			}
+			function updataPassoword(){
+				var password = $('[name = password]').val();
+				var userEmail = $('[name = email]').val();
+				$.ajax({
+					type:"post",
+					url:"user/info/changePassword",
+					data:{ 
+						'password':password,
+						'email':userEmail
+					},
+					dataType:"json",
+					success:function(result){
+					},
+					async:true
+				});
+			}
 			$("#inputEmail").on('input', function() {
 				$("#nullEmail").hide();
 			})
@@ -277,8 +311,9 @@ createTime:2019年2月17日 上午10:51:53
 				$('#emailValueGroup').hide(flashTime);
 				$('#emailGroup').hide(flashTime);
 				$('#finishGroup').show(flashTime);
+				updataPassoword();
 				setTimeout(function() {
-					window.location = '/';
+					window.location = 'login.jsp';
 				}, 3000)
 			}
 		})

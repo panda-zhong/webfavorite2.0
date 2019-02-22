@@ -21,20 +21,13 @@ public class TestmessageDao {
 		this.messageDao.addMessage(message);
 	}
 //	@Test
-	public void testUpMessagestate() throws Exception {
-		Message message = new Message();
-		message.setState("1");
-		message.setId("1");
-		this.messageDao.upMessagestate(message);
-	}
-//	@Test
 	public void testgetMessageByToAndState() throws Exception {
 		Message message = new Message();
 		message.setState("1");
 		message.setTo("1");
-		List<Message> list = this.messageDao.getMessageByToAndState(message);
-		for (Message message2 : list) {
-			System.out.println(message2);
-		}
+//		List<Message> list = this.messageDao.getMessageByToAndState(message);
+//		for (Message message2 : list) {
+//			System.out.println(message2);
+//		}
 	}
 }

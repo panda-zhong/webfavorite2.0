@@ -58,18 +58,32 @@ public class LoginServlet extends HttpServlet{
 			}
 			break;
 		case "checkAccount":
-			this.checkAccount(req,resp);
+			try {
+				this.checkAccount(req,resp);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
+		case "logout":
+			this.logout(req,resp);
+			break;
+			
 		default:
 			break;
 		}
 		return;
 	}
 	
-	private void checkAccount(HttpServletRequest req, HttpServletResponse resp) {
+	private void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		// TODO Auto-generated method stub
+		session.removeAttribute("USERINSESSION");
+		resp.sendRedirect(path+"/website/search/index");
+	}
+	private void checkAccount(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
 		// TODO Auto-generated method stub
 		String account = req.getParameter("account");
-		if(account=="1"){
+		if(this.userService.checkAccount(account)){
 			pw.print(false);
 		}else{
 			pw.print(true);

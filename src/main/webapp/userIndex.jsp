@@ -132,6 +132,9 @@
 			.addCollect:hover {
 				border: 2px dashed skyblue;
 			}
+			#nav{
+				margin-top: 25px;
+			}
 		</style>
 	</head>
 	<!--
@@ -192,32 +195,32 @@ createTime:2019年2月17日 上午10:51:53
 						<li class="userInfo">
 							<div class="userLogo">
 								<a href="">
-									<img alt="140x140" src="img/weblogo.png" class="img-circle" />
+									<img alt="140x140" src="${USERINSESSION.logo}" class="img-circle" />
 								</a>
 							</div>
 							<div class="detailInfo">
 								<div class="info-head">
 									<a href="">
-										<h2 class="userName"><strong>panda</strong></h2>
+										<h2 class="userName"><strong>${USERINSESSION.name}	</strong></h2>
 									</a>
 									<p>
 										<small>
 										<a href="">
 										关注：<span id="collect">
-										3											
+										${USERINSESSION.idolSize}										
 										</span>
 										</a>
 										&nbsp;&nbsp;&nbsp; 
 										<a href="">
 											粉丝：
-											<span id="funs">2</span>
+											<span id="funs">${USERINSESSION.funsSize}</span>
 											
 										</a>
 										</small>
 									</p>
 									<p>
 										<span id="introduction">
-											哈哈哈哈哈哈哈或或或或或
+											${USERINSESSION.introduction}
 										</span>
 									</p>
 								</div>
@@ -225,13 +228,13 @@ createTime:2019年2月17日 上午10:51:53
 						</li>
 					</ul>
 				</div>
-				<div class="row">
+				<div class="row" id="nav">
 					<ul class="nav nav-pills">
 						<li role="presentation" class="active">
 							<a href="user/collect/getAll">收藏<span class="label label-info">30</span></a>
 						</li>
 						<li role="presentation">
-							<a href="user/message/getBy">信息<span class="label label-info">3</span></a>
+							<a href="userMessage.jsp">信息<span class="label label-info">${UNREADSIZE}</span></a>
 						</li>
 						<li role="presentation">
 							<a href="userInfo.jsp">资料</a>

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import panda.nono.WebFavorite.po.User;
+
 @WebServlet(urlPatterns = "/user/collect/*") 
 public class CollectServlet  extends HttpServlet{
 	/**
@@ -44,8 +46,8 @@ public class CollectServlet  extends HttpServlet{
 	}
 	private void getAllCollect(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		// TODO Auto-generated method stub
-		String account = (String) session.getAttribute("USERINSESSION");
-		System.out.println(account);
+		User user = (User) session.getAttribute("USERINSESSION");
+		System.out.println(user.getAccount());
 		resp.sendRedirect(path+"/userIndex.jsp");
 	}
 

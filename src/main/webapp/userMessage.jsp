@@ -210,6 +210,9 @@
 				      font-size: 15px;
     color: #666;
 			}
+			#nav{
+				margin-top: 25px;
+			}
 		</style>
 	</head>
 	<!--
@@ -227,32 +230,32 @@ createTime:2019年2月17日 上午10:51:53
 						<li class="userInfo">
 							<div class="userLogo">
 								<a href="">
-									<img alt="140x140" src="img/weblogo.png" class="img-circle" />
+									<img alt="140x140" src="${USERINSESSION.logo}" class="img-circle" />
 								</a>
 							</div>
 							<div class="detailInfo">
 								<div class="info-head">
 									<a href="">
-										<h2 class="userName"><strong>panda</strong></h2>
+										<h2 class="userName"><strong>${USERINSESSION.name}	</strong></h2>
 									</a>
 									<p>
 										<small>
 										<a href="">
 										关注：<span id="collect">
-										3											
+										${USERINSESSION.idolSize}										
 										</span>
 										</a>
 										&nbsp;&nbsp;&nbsp; 
 										<a href="">
 											粉丝：
-											<span id="funs">2</span>
+											<span id="funs">${USERINSESSION.funsSize}</span>
 											
 										</a>
 										</small>
 									</p>
 									<p>
 										<span id="introduction">
-											哈哈哈哈哈哈哈或或或或或
+											${USERINSESSION.introduction}
 										</span>
 									</p>
 								</div>
@@ -260,13 +263,13 @@ createTime:2019年2月17日 上午10:51:53
 						</li>
 					</ul>
 				</div>
-				<div class="row">
+				<div class="row" id="nav">
 					<ul class="nav nav-pills">
 						<li role="presentation">
 							<a href="userIndex.jsp">收藏<span class="label label-info">30</span></a>
 						</li>
 						<li role="presentation" class="active">
-							<a href="userMessage.jsp">信息<span class="label label-info">3</span></a>
+							<a href="userMessage.jsp">信息<span class="label label-info">${UNREADSIZE}</span></a>
 						</li>
 						<li role="presentation">
 							<a href="userInfo.jsp">资料</a>
@@ -288,25 +291,26 @@ createTime:2019年2月17日 上午10:51:53
 				<div class="row">
 					<ul class="leftNav">
 						<li class="leftActive" id="left1">
-							<a href="javascript:">回复我的<span class="label label-info" id="left1Number"></span></a>
+							<a href="javascript:">回复我的</a>
 						</li>
 						<li id="left2">
-							<a href="javascript:">收到的赞<span class="label label-info">5</span></a>
+							<a href="javascript:">收到的赞</a>
 						</li>
 						<li id="left3">
 							<a href="javascript:">
-								系统通知<span class="label label-info">7</span>
+								系统通知
 							</a>
 						</li>
 					</ul>
 					<div class="messageList">
+					<c:forEach items="${USERMESSAGEINSESSION}" var="message"></c:forEach>
 						<div class="message">
 							<div class="messageTop">
-								<span id="messageUser">panda</span>
-								<span id="messageTime">今天 12:00</span>
+								<span id="messageUser">${message.from}</span>
+								<span id="messageTime">${message.time}</span>
 							</div>
 							<div class="messageDetail">
-								“BILIBILI POWER UP 2018”今日登陆深圳卫视！下午13：30分，锁定深圳卫视，在电视上看你喜爱的UP主。“BILIBILI POWER UP 2018”今日登陆深圳卫视！下午13：30分，锁定深圳卫视，在电视上看你喜爱的UP主。
+								${message.detail}
 							</div>
 						</div>
 					</div>
@@ -332,7 +336,99 @@ createTime:2019年2月17日 上午10:51:53
 				$(this).attr('class', 'leftActive')
 				$('.webInfoRIght').text(leftText.replace(/\d+/g,''));
 			})
+			$("#left1").on('click',function(){
+				getUserMessage();
+			})
+			$("#left2").on('click',function(){
+				getLikeMessage();
+			})
+			$("#left3").on('click',function(){
+				getAdminMessage();
+			})
 			$("#left1Number").text(5);
+			getUserMessage();
+			setReadState();
+			function getUserMessage(){
+				$.ajax({
+					type:"get",
+					url:"user/message/getByUser",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8", 
+					data:{ 
+						
+					},
+					dataType:"json",
+					success:function(result){
+						var messageList = result;
+						setMessage(messageList)
+					},
+					async:true
+				});
+			}
+			function setReadState (){
+				$.ajax({
+					type:"get",
+					url:"user/message/setReadState",
+					data:{ 
+					},
+					dataType:"json",
+					success:function(result){
+					},
+					async:true
+				});
+			}
+			function getAdminMessage(){
+				$.ajax({
+					type:"get",
+					url:"user/message/getByAdmin",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8", 
+					data:{ 
+						
+					},
+					dataType:"json",
+					success:function(result){
+						var messageList = result;
+						setMessage(messageList)
+					},
+					async:true
+				});
+			}
+			function getLikeMessage(){
+				$.ajax({
+					type:"get",
+					url:"user/message/getByLike",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8", 
+					data:{ 
+						
+					},
+					dataType:"json",
+					success:function(result){
+						var messageList = result;
+						setMessage(messageList)
+					},
+					async:true
+				});
+			}
+			
+			function setMessage(messageList){
+				var messageSize = messageList.length;
+				var messageListDiv = $(".messageList");
+				messageListDiv.empty()
+				for(i=0;i<messageSize;i++){
+					var message = $("<div class='message'></div>")
+					var messageTop = $("<div class='messageTop'></div>")
+					var messageUser = $("<span id='messageUser'></span>")
+					messageUser.text(messageList[i].from);
+					var messageTime = $("<span id='messageTime'></span>")
+					messageTime.text(messageList[i].time);
+					messageTop.append(messageUser)
+					messageTop.append(messageTime);
+					var messageDetail = $("<div class='messageDetail'></div>") 
+					messageDetail.text(messageList[i].detail);
+					message.append(messageTop);
+					message.append(messageDetail);
+					messageListDiv.append(message)
+				}
+			}
 		})
 	</script>
 
