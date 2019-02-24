@@ -11,9 +11,18 @@ public class Website {
 	private String good;
 	private String bad;
 	private String readwebsite;
+	private String detail;
 	private String click;
 	private String id;
+	private String userWebsiteId;
+	private String userRegeditTime;
 	
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 	public Website(String url, String logo, String kind, String name, String regeditTime, String account,
 			String good, String bad, String readwebsite, String click, String id) {
 		super();
@@ -109,5 +118,17 @@ public class Website {
 	}
 	public void setClick(String click) {
 		this.click = click;
+	}
+	public String getUserWebsiteId() {
+		return userWebsiteId;
+	}
+	public void setUserWebsiteId(String userWebsiteId) {
+		this.userWebsiteId = userWebsiteId;
+	}
+	public String getUserRegeditTime() {
+		return userRegeditTime;
+	}
+	public void setUserRegeditTime(String userRegeditTime) {
+		this.userRegeditTime = userRegeditTime;
 	}
 }

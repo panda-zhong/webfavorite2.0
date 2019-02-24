@@ -7,6 +7,17 @@ public class Userwebsite {
 	private String logo;
 	private String detail;
 	private String id;
+	public Userwebsite() {
+		// TODO Auto-generated constructor stub
+	}
+	public Userwebsite(String url, String account, String name, String logo, String detail) {
+		super();
+		this.url = url;
+		this.account = account;
+		this.name = name;
+		this.logo = logo;
+		this.detail = detail;
+	}
 	public String getUrl() {
 		return url;
 	}

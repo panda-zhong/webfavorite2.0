@@ -70,6 +70,7 @@ public class WebsiteDaoImpl implements WebsiteDao {
 	@Override
 	public List<Website> getWebsiteByTime(int page) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		sql = "SELECT website.url, website.logo, website.kind,website. state, website.`name`, "
 				+ "website.regeditTime, website.account,website.good, "
 				+ "website.bad,website.readwebsite, website.click, website.id "
@@ -153,6 +154,7 @@ public class WebsiteDaoImpl implements WebsiteDao {
 
 	@Override
 	public List<Website> getWebsiteByLike(int page) throws SQLException {
+		connect = JDBCUtil.getConnection();
 		sql = "SELECT website.url, website.logo, website.kind,website. state, website.`name`, "
 				+ "website.regeditTime, website.account,website.good, "
 				+ "website.bad,website.readwebsite, website.click, website.id "
@@ -187,6 +189,7 @@ public class WebsiteDaoImpl implements WebsiteDao {
 	@Override
 	public List<Website> getWebSiteByName(Website website, int page) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		sql = "SELECT website.url, website.logo, website.kind,website. state, website.`name`, "
 				+ "website.regeditTime, website.account,website.good, "
 				+ "website.bad,website.readwebsite, website.click, website.id "

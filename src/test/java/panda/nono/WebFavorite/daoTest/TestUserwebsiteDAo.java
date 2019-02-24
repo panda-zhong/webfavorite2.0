@@ -23,11 +23,4 @@ public class TestUserwebsiteDAo {
 		this.userwebsiteDao.addUserwebsite(userwebsite);
 	}
 	
-//	 @Test
-		public void testgetUserwebsiteByAccount() throws Exception {
-		 Userwebsite userwebsite = new Userwebsite();
-		 userwebsite.setAccount("1");
-		 List<Userwebsite> getUserwebsite = this.userwebsiteDao.getUserwebsiteByAccount(userwebsite);
-			System.out.println(getUserwebsite);
-		}
 }

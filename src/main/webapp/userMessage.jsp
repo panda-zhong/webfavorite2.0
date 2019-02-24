@@ -199,7 +199,8 @@
 				margin-right: 20px;
 				background-color: RGB(247, 247, 247);
 			}
-			.webInfoRIght{
+			
+			.webInfoRIght {
 				padding: 24px 16px;
 				background-color: #fff;
 				margin-bottom: 10px;
@@ -207,10 +208,11 @@
 				width: 700px;
 				box-shadow: 0 2px 4px 0 rgba(121, 146, 185, .54);
 				float: left;
-				      font-size: 15px;
-    color: #666;
+				font-size: 15px;
+				color: #666;
 			}
-			#nav{
+			
+			#nav {
 				margin-top: 25px;
 			}
 		</style>
@@ -303,7 +305,7 @@ createTime:2019年2月17日 上午10:51:53
 						</li>
 					</ul>
 					<div class="messageList">
-					<c:forEach items="${USERMESSAGEINSESSION}" var="message"></c:forEach>
+						<c:forEach items="${USERMESSAGEINSESSION}" var="message"></c:forEach>
 						<div class="message">
 							<div class="messageTop">
 								<span id="messageUser">${message.from}</span>
@@ -325,6 +327,7 @@ createTime:2019年2月17日 上午10:51:53
 	<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(document).on('ready', function() {
+
 			$(".website").hover(function() {
 				$(this).children('.websiteDetail').show(100);
 			}, function() {
@@ -334,86 +337,88 @@ createTime:2019年2月17日 上午10:51:53
 				$(".leftNav li").removeClass();
 				var leftText = $(this).children('a').text();
 				$(this).attr('class', 'leftActive')
-				$('.webInfoRIght').text(leftText.replace(/\d+/g,''));
+				$('.webInfoRIght').text(leftText.replace(/\d+/g, ''));
 			})
-			$("#left1").on('click',function(){
+			$("#left1").on('click', function() {
 				getUserMessage();
 			})
-			$("#left2").on('click',function(){
+			$("#left2").on('click', function() {
 				getLikeMessage();
 			})
-			$("#left3").on('click',function(){
+			$("#left3").on('click', function() {
 				getAdminMessage();
 			})
-			$("#left1Number").text(5);
+
 			getUserMessage();
 			setReadState();
-			function getUserMessage(){
+
+			function getUserMessage() {
 				$.ajax({
-					type:"get",
-					url:"user/message/getByUser",
-					contentType: "application/x-www-form-urlencoded; charset=utf-8", 
-					data:{ 
-						
+					type: "get",
+					url: "user/message/getByUser",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					data: {
+
 					},
-					dataType:"json",
-					success:function(result){
+					dataType: "json",
+					success: function(result) {
 						var messageList = result;
 						setMessage(messageList)
 					},
-					async:true
+					async: true
 				});
 			}
-			function setReadState (){
+
+			function setReadState() {
 				$.ajax({
-					type:"get",
-					url:"user/message/setReadState",
-					data:{ 
-					},
-					dataType:"json",
-					success:function(result){
-					},
-					async:true
+					type: "get",
+					url: "user/message/setReadState",
+					data: {},
+					dataType: "json",
+					success: function(result) {},
+					async: true
 				});
 			}
-			function getAdminMessage(){
+
+			function getAdminMessage() {
 				$.ajax({
-					type:"get",
-					url:"user/message/getByAdmin",
-					contentType: "application/x-www-form-urlencoded; charset=utf-8", 
-					data:{ 
-						
+					type: "get",
+					url: "user/message/getByAdmin",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					data: {
+
 					},
-					dataType:"json",
-					success:function(result){
+					dataType: "json",
+					success: function(result) {
 						var messageList = result;
 						setMessage(messageList)
 					},
-					async:true
+					async: true
 				});
 			}
-			function getLikeMessage(){
+
+			function getLikeMessage() {
 				$.ajax({
-					type:"get",
-					url:"user/message/getByLike",
-					contentType: "application/x-www-form-urlencoded; charset=utf-8", 
-					data:{ 
-						
+					type: "get",
+					url: "user/message/getByLike",
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					data: {
+
 					},
-					dataType:"json",
-					success:function(result){
+					dataType: "json",
+					success: function(result) {
 						var messageList = result;
 						setMessage(messageList)
 					},
-					async:true
+					async: true
 				});
 			}
-			
-			function setMessage(messageList){
+
+			function setMessage(messageList) {
 				var messageSize = messageList.length;
 				var messageListDiv = $(".messageList");
 				messageListDiv.empty()
-				for(i=0;i<messageSize;i++){
+				for(i = 0; i < messageSize; i++) {
 					var message = $("<div class='message'></div>")
 					var messageTop = $("<div class='messageTop'></div>")
 					var messageUser = $("<span id='messageUser'></span>")
@@ -422,13 +427,14 @@ createTime:2019年2月17日 上午10:51:53
 					messageTime.text(messageList[i].time);
 					messageTop.append(messageUser)
 					messageTop.append(messageTime);
-					var messageDetail = $("<div class='messageDetail'></div>") 
+					var messageDetail = $("<div class='messageDetail'></div>")
 					messageDetail.text(messageList[i].detail);
 					message.append(messageTop);
 					message.append(messageDetail);
 					messageListDiv.append(message)
 				}
 			}
+
 		})
 	</script>
 

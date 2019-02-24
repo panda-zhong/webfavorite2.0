@@ -24,6 +24,7 @@ public class UserDaoImpl implements UserDao{
 	PreparedStatement preparedStatement = null;
 	public void regedit(User user) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		String account = user.getAccount();
 		String password = user.getPassword();
 		String email = user.getEmail();
@@ -40,12 +41,14 @@ public class UserDaoImpl implements UserDao{
 		preparedStatement.setDate(5, mysqldate);
 		preparedStatement.setString(6, salt);
 		preparedStatement.execute();
+		JDBCUtil.close(connect);
 	}
 	
 
 	@Override
 	public void updatePassword(User user) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		String email = user.getEmail();
 		String password = user.getPassword();
 		String salt = user.getSalt();
@@ -55,11 +58,13 @@ public class UserDaoImpl implements UserDao{
 		preparedStatement.setString(2,salt);
 		preparedStatement.setString(3,email);
 		preparedStatement.executeUpdate();
+		JDBCUtil.close(connect);
 	}
 
 	@Override
 	public void setState(User user) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		String account = user.getAccount();
 		String stade = user.getState();
 		sql = "UPDATE user SET state=? WHERE account=?; ";
@@ -67,11 +72,13 @@ public class UserDaoImpl implements UserDao{
 		preparedStatement.setString(1, stade);
 		preparedStatement.setString(2, account);
 		preparedStatement.executeUpdate();
+		JDBCUtil.close(connect);
 	}
 
 	@Override
 	public User getUserByName(User user) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		String name = user.getName();
 		sql = "SELECT name,account,password,logo,regeditTime,state,introduction,email FROM user where name = ?";
 		preparedStatement = connect.prepareStatement(sql);
@@ -96,12 +103,14 @@ public class UserDaoImpl implements UserDao{
 			resultUser.setIntroduction(userIntroduction);
 			resultUser.setEmail(userEmail);
 		}
+		JDBCUtil.close(connect);
 		return resultUser;
 	}
 	
 	@Override
 	public User getUserById(User user) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		String id = user.getAccount();
 		sql = "SELECT salt, name,account,password,logo,regeditTime,state,introduction,email,funsSize FROM user where account = ? and state = 1";
 		preparedStatement = connect.prepareStatement(sql);
@@ -130,12 +139,14 @@ public class UserDaoImpl implements UserDao{
 			resultUser.setSalt(salt);
 			resultUser.setFunsSize(funsSize);
 		}
+		JDBCUtil.close(connect);
 		return resultUser;
 	}
 
 	@Override
 	public List<User> getUserByFuns(int page) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		sql = "SELECT `user`.account, `user`.email, `user`.logo,"
 				+ " `user`.regeditTime, `user`.state, `user`.introduction, `user`.`name`,"
 				+ " `user`.funsSize FROM `user` where state = 1 ORDER BY `user`.funsSize DESC LIMIT ?,?";
@@ -158,6 +169,7 @@ public class UserDaoImpl implements UserDao{
 			user.setFunsSize(funsSize);
 			userList.add(user);
 		}
+		JDBCUtil.close(connect);
 		return userList;
 	}
 
@@ -165,6 +177,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public void updataInfo(User user) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		String account = user.getAccount();
 		String name = user.getName();
 		String email = user.getEmail();
@@ -176,17 +189,20 @@ public class UserDaoImpl implements UserDao{
 		preparedStatement.setString(3, introduction);
 		preparedStatement.setString(4, account);
 		preparedStatement.executeUpdate();
+		JDBCUtil.close(connect);
 	}
 
 
 	@Override
 	public void setLogo(String account, String logo) throws SQLException {
 		// TODO Auto-generated method stub
+		connect = JDBCUtil.getConnection();
 		sql = "UPDATE user SET logo=? WHERE account=?; ";
 		preparedStatement = connect.prepareStatement(sql);
 		preparedStatement.setString(1, logo);
 		preparedStatement.setString(2, account);
 		preparedStatement.executeUpdate();
+		JDBCUtil.close(connect);
 	}
 	
 }

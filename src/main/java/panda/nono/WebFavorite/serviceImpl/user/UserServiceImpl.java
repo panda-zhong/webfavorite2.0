@@ -11,12 +11,16 @@ import panda.nono.WebFavorite.common.Common;
 import panda.nono.WebFavorite.dao.MessageDao;
 import panda.nono.WebFavorite.dao.UserDao;
 import panda.nono.WebFavorite.dao.UserlikeuserDao;
+import panda.nono.WebFavorite.dao.UserwebsiteDao;
 import panda.nono.WebFavorite.daoImpl.MessageDaoImpl;
 import panda.nono.WebFavorite.daoImpl.UserDaoImpl;
 import panda.nono.WebFavorite.daoImpl.UserlikeuserDaoImpl;
+import panda.nono.WebFavorite.daoImpl.UserwebsiteDaoImpl;
 import panda.nono.WebFavorite.po.Message;
 import panda.nono.WebFavorite.po.User;
 import panda.nono.WebFavorite.po.Userlikeuser;
+import panda.nono.WebFavorite.po.Userwebsite;
+import panda.nono.WebFavorite.po.Website;
 import panda.nono.WebFavorite.service.user.UserService;
 import panda.nono.WebFavorite.util.Encryption;
 
@@ -24,6 +28,7 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao = new UserDaoImpl();
 	private UserlikeuserDao userlikeuserDao = new UserlikeuserDaoImpl();
 	private MessageDao messageDao = new MessageDaoImpl();
+	private UserwebsiteDao userwebsiteDao = new UserwebsiteDaoImpl();
 	@Override
 	public User check(String account, String password) throws SQLException {
 		// TODO Auto-generated method stub
@@ -116,6 +121,24 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		this.userDao.setLogo(account, logo);
 	}
+	@Override
+	public void addMyWebSite(String account, String url, String name, String logo, String introduction) throws SQLException {
+		// TODO Auto-generated method stub
+		Userwebsite userwebsite = new Userwebsite(url, account, name, logo, introduction);
+		this.userwebsiteDao.addUserwebsite(userwebsite);
+	}
+	@Override
+	public List<Website> getMyWebSite(String account) throws SQLException {
+		// TODO Auto-generated method stub
+		List<Website> list = this.userwebsiteDao.getUserwebsiteByAccount(account);
+		return list;
+	}
+	@Override
+	public void deleteMyWebsite(String id) throws SQLException {
+		// TODO Auto-generated method stub
+		Userwebsite userwebsite = new Userwebsite();
+		userwebsite.setId(id);
+		this.userwebsiteDao.deleteUserwesite(userwebsite);
+	}
 	
-
 }

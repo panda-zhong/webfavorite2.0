@@ -5,6 +5,7 @@ import java.util.List;
 
 import panda.nono.WebFavorite.po.Message;
 import panda.nono.WebFavorite.po.User;
+import panda.nono.WebFavorite.po.Website;
 
 public interface UserService {
 	public User check(String account,String password) throws SQLException;
@@ -19,4 +20,7 @@ public interface UserService {
 	public void readMessage(String account) throws SQLException;
 	public void updataInfo(String account, String name, String email, String introduction) throws SQLException;
 	public void updataLogo(String account,String logo) throws SQLException;
+	public void addMyWebSite(String account,String url,String name,String logo,String introduction) throws SQLException;
+	public List<Website> getMyWebSite(String account) throws SQLException;
+	public void deleteMyWebsite(String id) throws SQLException;
 }
